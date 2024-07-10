@@ -226,6 +226,7 @@ head=document.querySelector(".dialog h1")
 fim=document.querySelectorAll("figure img")
 fig=document.querySelectorAll("figcaption")
 pole=document.querySelector(".pole");
+im=document.querySelector(".dialog .image img");
 
 closs.addEventListener("click",()=>{
     dial.classList.remove("maje");
@@ -237,6 +238,7 @@ h1=document.querySelector(".news1 .pdiv p")
 news1.addEventListener("click",function(){
     bg = window.getComputedStyle(news1, null).backgroundImage;
     imag.style.backgroundImage=bg;
+    im.setAttribute("src",null);
     q2.innerText=b1[0].innerText;
     q1.innerText=b1[1].innerText;
     t3.innerText=b1[3].innerText;
@@ -251,7 +253,7 @@ news1.addEventListener("click",function(){
 latest.addEventListener("click",function(event){
     let t= event.target;
     if(latest!=t){
-        if(t.nodeName=="I"){
+        if(t.nodeName=="I"||t.nodeName=="SPAN"){
             curd=t.parentElement.parentElement.parentElement;
         }
         else{
@@ -259,8 +261,8 @@ latest.addEventListener("click",function(event){
         }
         if(curd.childElementCount==2){
             f=curd.children[0].children[0].getAttribute("src");
-            bg = window.getComputedStyle(news1, null).backgroundImage;
-            imag.style.backgroundImage=bg;
+            imag.style.backgroundImage=null;
+            im.setAttribute("src",f);
             dial.classList.add("maje");
             y=curd.children[1].children[0];
             head.innerText=y.innerText;
@@ -270,13 +272,13 @@ latest.addEventListener("click",function(event){
             fim[1].setAttribute("src",f);
             q1.innerText="Latest";
             q2.innerText="Featured";
-            z=curd.children[1].children[1];
+            z=curd.children[1].children[1].children[0];
             t3.innerText=z.innerText;
         }
         else{
             f=curd.children[0].children[0].getAttribute("src");
-            bg = window.getComputedStyle(news1, null).backgroundImage;
-            imag.style.backgroundImage=bg;
+            imag.style.backgroundImage=null;
+            im.setAttribute("src",f);
             dial.classList.add("maje");
             y=curd.children[2].children[0];
             head.innerText=y.innerText;
@@ -285,16 +287,19 @@ latest.addEventListener("click",function(event){
             fim[0].setAttribute("src",f);
             fim[1].setAttribute("src",f);
             q1.innerText="Latest";
-            z=curd.children[2].children[1];
+            z=curd.children[2].children[1].children[0];
             t3.innerText=z.innerText;
             typ=curd.children[1].children[0];
             cnt=curd.children[1].children[1];
-            q2.innerText=typ.innerText;
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+            p=capitalizeFirstLetter(typ.innerText);
+            q2.innerText=p;
             pole.innerText=cnt.innerText;
 
         }
     }
-    console.dir(curd);
 })
 
 b2=document.querySelectorAll(".news2 span")
@@ -303,6 +308,7 @@ h2=document.querySelector(".news2 .pdiv p")
 news2.addEventListener("click",function(){
     bg = window.getComputedStyle(news2, null).backgroundImage;
     imag.style.backgroundImage=bg;
+    im.setAttribute("src",null);
     q2.innerText=b2[0].innerText;
     q1.innerText=b2[1].innerText;
     t3.innerText=b2[3].innerText;
@@ -320,6 +326,7 @@ ha=document.querySelector(".newsa .pdiv p")
 newsa.addEventListener("click",function(){
     bg = window.getComputedStyle(newsa, null).backgroundImage;
     imag.style.backgroundImage=bg;
+    im.setAttribute("src",null);
     q2.innerText=ba[0].innerText;
     q1.innerText=ba[1].innerText;
     t3.innerText=ba[3].innerText;
@@ -337,6 +344,7 @@ hb=document.querySelector(".newsb .pdiv p")
 newsb.addEventListener("click",function(){
     bg = window.getComputedStyle(newsb, null).backgroundImage;
     imag.style.backgroundImage=bg;
+    im.setAttribute("src",null);
     q2.innerText=bb[0].innerText;
     q1.innerText=bb[1].innerText;
     t3.innerText=bb[3].innerText;
