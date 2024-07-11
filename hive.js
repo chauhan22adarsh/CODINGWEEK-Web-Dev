@@ -78,7 +78,6 @@ ict.addEventListener("click",function(event){
         }else if(tits(act)){
             con.classList.remove("ac");
             sp.parentElement.classList.add("active");
-            console.log("done");
             sp.innerHTML= `${act.innerText} <i class="fa-solid fa-chevron-down"></i>`;
             
         }else if(sp.firstElementChild==act){
@@ -88,9 +87,14 @@ ict.addEventListener("click",function(event){
             sp.parentElement.classList.add("active");
             con.classList.toggle("ac");
             act.classList.toggle("up");
-        }else{
-            con.classList.remove("ac");  
+        }else if(act.nodeName=="A"){
             sp.innerHTML= `SPORTS <i class="fa-solid fa-chevron-down"></i>`;
+            con.classList.remove("ac");  
+            let dow=sp.firstElementChild;
+            dow.classList.remove("up");
+        }
+        else{ 
+            con.classList.remove("ac"); 
             let dow=sp.firstElementChild;
             dow.classList.remove("up");
         }
@@ -102,14 +106,25 @@ let rope=document.querySelector(".rope");
 let ind=document.querySelectorAll(".int");
 let rnd=document.querySelector("#trp");
 let gu=document.querySelectorAll(".tatti");
+let mens=document.querySelector(".mens");
 
 ict.addEventListener("click",function(event){
     let mat=event.target;
     if(tlg==mat){
         tlg.classList.toggle("cross");
-        menu.classList.toggle("boots");
-    }
-})
+        if(tlg.classList.contains("cross")){
+            mens.classList.add("cats");
+            setTimeout(()=>{
+                menu.classList.add("boots");
+            },5);
+        }
+        else{
+                menu.classList.remove("boots");
+                setTimeout(()=>{
+                    mens.classList.remove("cats");
+                },400);
+        }
+}})
 
 menu.addEventListener("click",function(event){
     let rat=event.target;
@@ -123,6 +138,9 @@ menu.addEventListener("click",function(event){
             else{
                 tlg.classList.remove("cross");
                 menu.classList.remove("boots");
+                setTimeout(()=>{
+                    mens.classList.remove("cats");
+                },1000);
                 rope.classList.remove("cats");
                 l.parentElement.classList.add("tax");
                 rnd.innerText=`SPORTS >`;
@@ -138,6 +156,9 @@ menu.addEventListener("click",function(event){
             rnd.parentElement.classList.add("tax");
             rnd.innerText=`${g.innerText} >`;
             tlg.classList.remove("cross");
+            setTimeout(()=>{
+                mens.classList.remove("cats");
+            },400);
             menu.classList.remove("boots");
             rope.classList.remove("cats");
         }
@@ -226,10 +247,11 @@ head=document.querySelector(".dialog h1")
 fim=document.querySelectorAll("figure img")
 fig=document.querySelectorAll("figcaption")
 pole=document.querySelector(".pole");
-im=document.querySelector(".dialog .image img");
 
 closs.addEventListener("click",()=>{
     dial.classList.remove("maje");
+    let m=imag.children[0];
+    m.remove();
 })
 
 b1=document.querySelectorAll(".news1 span")
@@ -238,7 +260,7 @@ h1=document.querySelector(".news1 .pdiv p")
 news1.addEventListener("click",function(){
     bg = window.getComputedStyle(news1, null).backgroundImage;
     imag.style.backgroundImage=bg;
-    im.setAttribute("src",null);
+    imag.style.backgroundSize="cover";
     q2.innerText=b1[0].innerText;
     q1.innerText=b1[1].innerText;
     t3.innerText=b1[3].innerText;
@@ -248,21 +270,17 @@ news1.addEventListener("click",function(){
     fim[1].setAttribute("src",bg);
     fig[0].innerText=h1.innerText;
     fig[1].innerText=h1.innerText;
+    pole.innerText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit tempore necessitatibus quam, corporis repellendus sint";
 })
 
-latest.addEventListener("click",function(event){
-    let t= event.target;
-    if(latest!=t){
-        if(t.nodeName=="I"||t.nodeName=="SPAN"){
-            curd=t.parentElement.parentElement.parentElement;
-        }
-        else{
-            curd=t.parentElement.parentElement;
-        }
-        if(curd.childElementCount==2){
+function dot(curd){
+            let im=document.createElement("img");
+            imag.appendChild(im);
             f=curd.children[0].children[0].getAttribute("src");
             imag.style.backgroundImage=null;
             im.setAttribute("src",f);
+            im.style.height="100%";
+            im.style.width="100%";
             dial.classList.add("maje");
             y=curd.children[1].children[0];
             head.innerText=y.innerText;
@@ -270,15 +288,22 @@ latest.addEventListener("click",function(event){
             fig[1].innerText=y.innerText;
             fim[0].setAttribute("src",f);
             fim[1].setAttribute("src",f);
-            q1.innerText="Latest";
             q2.innerText="Featured";
             z=curd.children[1].children[1].children[0];
             t3.innerText=z.innerText;
-        }
-        else{
+            pole.innerText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit tempore necessitatibus quam, corporis repellendus sint";
+    
+            return 0;
+}
+
+function trot(curd){
+            let im=document.createElement("img");
+            imag.appendChild(im);
             f=curd.children[0].children[0].getAttribute("src");
             imag.style.backgroundImage=null;
             im.setAttribute("src",f);
+            im.style.height="100%";
+            im.style.width="100%";
             dial.classList.add("maje");
             y=curd.children[2].children[0];
             head.innerText=y.innerText;
@@ -286,7 +311,6 @@ latest.addEventListener("click",function(event){
             fig[1].innerText=y.innerText;
             fim[0].setAttribute("src",f);
             fim[1].setAttribute("src",f);
-            q1.innerText="Latest";
             z=curd.children[2].children[1].children[0];
             t3.innerText=z.innerText;
             typ=curd.children[1].children[0];
@@ -298,6 +322,49 @@ latest.addEventListener("click",function(event){
             q2.innerText=p;
             pole.innerText=cnt.innerText;
 
+            return 0;
+}
+
+latest.addEventListener("click",function(event){
+    let t= event.target;
+    if(latest!=t){
+        if(t.nodeName=="I"||t.nodeName=="SPAN"){
+            curd=t.parentElement.parentElement.parentElement;
+        }
+        else{
+            curd=t.parentElement.parentElement;
+        }
+        if(curd.childElementCount==2){
+            q1.innerText="Latest";
+            dot (curd);
+            
+        }
+        else{
+            q1.innerText="Latest";
+            trot (curd);
+
+        }
+    }
+})
+
+popular.addEventListener("click",function(event){
+    let t= event.target;
+    if(latest!=t){
+        if(t.nodeName=="I"||t.nodeName=="SPAN"){
+            curd=t.parentElement.parentElement.parentElement;
+        }
+        else{
+            curd=t.parentElement.parentElement;
+        }
+        if(curd.childElementCount==2){
+            q1.innerText="Popular";
+            dot (curd);
+            
+        }
+        else{
+            q1.innerText="Popular";
+            trot (curd);
+            
         }
     }
 })
@@ -308,7 +375,7 @@ h2=document.querySelector(".news2 .pdiv p")
 news2.addEventListener("click",function(){
     bg = window.getComputedStyle(news2, null).backgroundImage;
     imag.style.backgroundImage=bg;
-    im.setAttribute("src",null);
+    imag.style.backgroundSize="cover";
     q2.innerText=b2[0].innerText;
     q1.innerText=b2[1].innerText;
     t3.innerText=b2[3].innerText;
@@ -318,6 +385,7 @@ news2.addEventListener("click",function(){
     fim[1].setAttribute("src",bg);
     fig[0].innerText=h2.innerText;
     fig[1].innerText=h2.innerText;
+    pole.innerText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit tempore necessitatibus quam, corporis repellendus sint";
 })
 
 ba=document.querySelectorAll(".newsa span")
@@ -326,7 +394,7 @@ ha=document.querySelector(".newsa .pdiv p")
 newsa.addEventListener("click",function(){
     bg = window.getComputedStyle(newsa, null).backgroundImage;
     imag.style.backgroundImage=bg;
-    im.setAttribute("src",null);
+    imag.style.backgroundSize="cover";
     q2.innerText=ba[0].innerText;
     q1.innerText=ba[1].innerText;
     t3.innerText=ba[3].innerText;
@@ -336,6 +404,7 @@ newsa.addEventListener("click",function(){
     fim[1].setAttribute("src",bg);
     fig[0].innerText=ha.innerText;
     fig[1].innerText=ha.innerText;
+    pole.innerText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit tempore necessitatibus quam, corporis repellendus sint";
 })
 
 bb=document.querySelectorAll(".newsb span")
@@ -344,7 +413,7 @@ hb=document.querySelector(".newsb .pdiv p")
 newsb.addEventListener("click",function(){
     bg = window.getComputedStyle(newsb, null).backgroundImage;
     imag.style.backgroundImage=bg;
-    im.setAttribute("src",null);
+    imag.style.backgroundSize="cover";
     q2.innerText=bb[0].innerText;
     q1.innerText=bb[1].innerText;
     t3.innerText=bb[3].innerText;
@@ -354,5 +423,6 @@ newsb.addEventListener("click",function(){
     fim[1].setAttribute("src",bg);
     fig[0].innerText=hb.innerText;
     fig[1].innerText=hb.innerText;
+    pole.innerText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit tempore necessitatibus quam, corporis repellendus sint";
 })
 
